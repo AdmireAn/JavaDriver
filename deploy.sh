@@ -11,6 +11,6 @@ cd docs/.vuepress/dist
 git init
 git add -A
 git commit -m "deploy"
-git push -f git@github.com:AdmireAn/JavaDriver/.git master:vuepress # 推送到github vuepress分支
+git push -f git@github.com:AdmireAn/JavaDriver.git master:vuepress # 推送到github vuepress分支
 
 cd -
