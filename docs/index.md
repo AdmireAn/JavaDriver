@@ -1,10 +1,10 @@
 ---
 home: true
-heroImage: https://hbimg.huabanimg.com/fb25635e5908e98d4c0515824828c448efb1966e51d3-54Zry1_fw658/format/webp
+heroImage: /img/JAVADRIVER.png
 heroText: JavaDriver
 tagline: 🚀精选大厂Java面试题
 actionText: 开始使用 →
-actionLink: /pages/a2f161/
+actionLink: /pages/a030ff/
 bannerBg: none # auto => 网格纹背景(有bodyBgImg时无背景)，默认 | none => 无 | '大图地址' | background: 自定义背景样式       提示：如发现文本颜色不适应你的背景时可以到palette.styl修改$bannerTextColor变量
 
 features:
@@ -19,7 +19,7 @@ features:
 postList: none
 ---
 <p align="center">
-  <a class="become-sponsor" href="/pages/1b12ed/">支持这个项目</a>
+  <a class="become-sponsor" href="https://github.com/AdmireAn/JavaDriver">支持这个项目</a>
 </p>
 
 <style>
@@ -32,14 +32,6 @@ postList: none
   border: 1px solid #11a8cd;
 }
 </style>
-
-<br/>
-<p align="center">
-  <a href="https://www.npmjs.com/package/vuepress-theme-vdoing" target="_blank"><img src="https://img.shields.io/npm/v/vuepress-theme-vdoing" alt="npm" class="no-zoom"></a>
-  <a href="https://www.npmjs.com/package/vuepress-theme-vdoing" target="_blank"><img src="https://img.shields.io/npm/dt/vuepress-theme-vdoing" alt="npm" class="no-zoom"></a>
-  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank"><img src='https://img.shields.io/github/stars/xugaoyi/vuepress-theme-vdoing' alt='GitHub stars' class="no-zoom"></a>
-  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank"><img src='https://img.shields.io/github/forks/xugaoyi/vuepress-theme-vdoing' alt='GitHub forks' class="no-zoom"></a>
-</p>
 
 ## 🎖友情链接
 ::: cardList 2

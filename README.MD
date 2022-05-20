@@ -1,8 +1,8 @@
-<p align="center"><a href="https://github.com/AdmireAn/JavaDriver" target="_blank" rel="noopener noreferrer"><img width="180" src="https://cdn.jsdelivr.net/gh/xugaoyi/image_store/blog/20200409124835.png" alt="logo"></a></p>
+<p align="center"><a href="https://github.com/AdmireAn/JavaDriver" target="_blank" rel="noopener noreferrer"><img width="180" src="docs/.vuepress/public/img/JAVADRIVER.png" alt="logo"></a></p>
 
 <h2 align="center">JavaDriver</h2>
 
-* [文档 (国内源)](https://admirean.github.io/JavaDriver/)
+* [在线阅读 (国内源)](https://admirean.github.io/JavaDriver/)
 
 
 
