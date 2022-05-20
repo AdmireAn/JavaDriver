@@ -135,7 +135,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
     // 博主信息 (显示在首页侧边栏)
     blogger: {
-      avatar: '/img/head_photo.JPG',
+      avatar: 'https://tva1.sinaimg.cn/large/e6c9d24egy1h2f580pnmdj213w0u0422.jpg',
       name: 'YoungAnn',
       slogan: '西二旗Java老司机一枚 致力于社会主义舔砖Java',
     },
