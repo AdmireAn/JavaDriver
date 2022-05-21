@@ -32,8 +32,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         items: [
           { text: '基础', link: '/pages/a030ff/' },
           { text: '并发', link: '/pages/0da4b0/' },
-          { text: 'JVM', link: '/pages/5f2105/' },
-          { text: '设计模式', link: '/pages/6a18d3/' },
+          { text: 'JVM', link: '/pages/948850/' },
+          { text: '设计模式', link: '/pages/b37ad7/' },
         ],
       },
       {
@@ -50,8 +50,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         text: '数据库',
         link: '/database/',
         items: [
-          { text: 'MYSQL', link: '/pages/39e05b/' },
-          { text: 'REDIS', link: '/pages/894769/' },
+          { text: 'MYSQL', link: '/pages/3a8659/' },
+          { text: 'REDIS', link: '/pages/d70c1f/' },
         ],
       },
       {
@@ -137,7 +137,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     blogger: {
       avatar: 'https://tva1.sinaimg.cn/large/e6c9d24egy1h2f580pnmdj213w0u0422.jpg',
       name: 'YoungAnn',
-      slogan: '西二旗Java老司机一枚 致力于社会主义舔砖Java',
+      slogan: '西二旗Java老司机一枚 致力于社会主义添砖Java',
     },
 
     // 社交图标 (显示于博主信息栏和页脚栏。内置图标：https://doc.xugaoyi.com/pages/a20ce8/#social)
@@ -175,7 +175,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
   // 注入到页面<head>中的标签，格式[tagName, { attrName: attrValue }, innerHTML?]
   head: [
-    ['link', { rel: 'icon', href: '/img/favicon.ico' }], //favicons，资源放在public文件夹
+    ['link', { rel: 'icon', href: '/img/JAVADRIVER.png' }], //favicons，资源放在public文件夹
     [
       'meta',
       {
