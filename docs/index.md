@@ -46,9 +46,9 @@ postList: none
   link: https://baomidou.com/
   bgColor: '#f1f1f1'
   textColor: '#2A3344'
-- name: Deepin 社区
-  desc: Deepin 应用开发技术分享、DTK开发经验等
-  link: https://docs.deepin.org
+- name: vuepress-theme-vdoing
+  desc: 优秀的vuepress主题
+  link: https://github.com/xugaoyi/vuepress-theme-vdoing
   bgColor: '#f1f1f1'
   textColor: '#2A3344'
 - name: VForm官网
@@ -94,8 +94,13 @@ postList: none
 
 ## ⚡ 反馈与交流
 
-在使用过程中有任何问题和想法，请给我提 [Issue](https://github.com/xugaoyi/vuepress-theme-vdoing/issues)。
+在使用过程中有任何问题和想法，你可以：
+
+- 给我提 [Issue](https://github.com/AdmireAn/JavaDriver/issues)。
+
 你也可以在Issue查看别人提的问题和给出解决方案。
+
+- 戳[JavaDriver社区](https://support.qq.com/product/408813)
 
 <!-- 
 或者加入我们的交流群：
