@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>简述 Redis 集群配置以及基础原理 | JavaDriver</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/JavaDriver/img/JAVADRIVER.png">
+    <meta name="description" content="Java学习与总结">
+    <meta name="keywords" content="Java相关技术">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/JavaDriver/assets/css/0.styles.0a81f5bc.css" as="style"><link rel="preload" href="/JavaDriver/assets/js/app.90939cb0.js" as="script"><link rel="preload" href="/JavaDriver/assets/js/2.8d23e9e5.js" as="script"><link rel="preload" href="/JavaDriver/assets/js/165.95392c30.js" as="script"><link rel="prefetch" href="/JavaDriver/assets/js/10.1edb6dac.js"><link rel="prefetch" href="/JavaDriver/assets/js/100.b33f86ba.js"><link rel="prefetch" href="/JavaDriver/assets/js/101.0a94513e.js"><link rel="prefetch" href="/JavaDriver/assets/js/102.33e6a080.js"><link rel="prefetch" href="/JavaDriver/assets/js/103.232a13ca.js"><link rel="prefetch" href="/JavaDriver/assets/js/104.7ee6ced0.js"><link rel="prefetch" href="/JavaDriver/assets/js/105.7da3ff13.js"><link rel="prefetch" href="/JavaDriver/assets/js/106.4f67fbe0.js"><link rel="prefetch" href="/JavaDriver/assets/js/107.83ad896a.js"><link rel="prefetch" href="/JavaDriver/assets/js/108.acd73b33.js"><link rel="prefetch" href="/JavaDriver/assets/js/109.0c5a316f.js"><link rel="prefetch" href="/JavaDriver/assets/js/11.06baedfc.js"><link rel="prefetch" href="/JavaDriver/assets/js/110.468674e0.js"><link rel="prefetch" href="/JavaDriver/assets/js/111.0884b25d.js"><link rel="prefetch" href="/JavaDriver/assets/js/112.14a4db1b.js"><link rel="prefetch" href="/JavaDriver/assets/js/113.3665d791.js"><link rel="prefetch" href="/JavaDriver/assets/js/114.a76daf3e.js"><link rel="prefetch" href="/JavaDriver/assets/js/115.fc50325c.js"><link rel="prefetch" href="/JavaDriver/assets/js/116.d878d354.js"><link rel="prefetch" href="/JavaDriver/assets/js/117.41111223.js"><link rel="prefetch" href="/JavaDriver/assets/js/118.2e33528d.js"><link rel="prefetch" href="/JavaDriver/assets/js/119.1c5c3ccd.js"><link rel="prefetch" href="/JavaDriver/assets/js/12.f630918a.js"><link rel="prefetch" href="/JavaDriver/assets/js/120.cf624d25.js"><link rel="prefetch" href="/JavaDriver/assets/js/121.dc9a84ed.js"><link rel="prefetch" href="/JavaDriver/assets/js/122.8cefab56.js"><link rel="prefetch" href="/JavaDriver/assets/js/123.93d23262.js"><link rel="prefetch" href="/JavaDriver/assets/js/124.1df41ca4.js"><link rel="prefetch" href="/JavaDriver/assets/js/125.a7953d41.js"><link rel="prefetch" href="/JavaDriver/assets/js/126.60e10f35.js"><link rel="prefetch" href="/JavaDriver/assets/js/127.dd1cb7a8.js"><link rel="prefetch" href="/JavaDriver/assets/js/128.243a5468.js"><link rel="prefetch" href="/JavaDriver/assets/js/129.5218fc77.js"><link rel="prefetch" href="/JavaDriver/assets/js/13.a35107d5.js"><link rel="prefetch" href="/JavaDriver/assets/js/130.337ce8b9.js"><link rel="prefetch" href="/JavaDriver/assets/js/131.3ede4d10.js"><link rel="prefetch" href="/JavaDriver/assets/js/132.a0f7bf5f.js"><link rel="prefetch" href="/JavaDriver/assets/js/133.2b7b4e83.js"><link rel="prefetch" href="/JavaDriver/assets/js/134.22676154.js"><link rel="prefetch" href="/JavaDriver/assets/js/135.bd2ef845.js"><link rel="prefetch" href="/JavaDriver/assets/js/136.9ee85e23.js"><link rel="prefetch" href="/JavaDriver/assets/js/137.f4f86f41.js"><link rel="prefetch" href="/JavaDriver/assets/js/138.6ebed0f8.js"><link rel="prefetch" href="/JavaDriver/assets/js/139.d65c870e.js"><link rel="prefetch" href="/JavaDriver/assets/js/14.4ee86474.js"><link rel="prefetch" href="/JavaDriver/assets/js/140.6c013524.js"><link rel="prefetch" href="/JavaDriver/assets/js/141.6bb0f0b2.js"><link rel="prefetch" href="/JavaDriver/assets/js/142.0dd7ee63.js"><link rel="prefetch" href="/JavaDriver/assets/js/143.1744f01b.js"><link rel="prefetch" href="/JavaDriver/assets/js/144.3e7af70b.js"><link rel="prefetch" href="/JavaDriver/assets/js/145.26c5f49a.js"><link rel="prefetch" href="/JavaDriver/assets/js/146.a843c882.js"><link rel="prefetch" href="/JavaDriver/assets/js/147.b9986ee3.js"><link rel="prefetch" href="/JavaDriver/assets/js/148.e233f6ad.js"><link rel="prefetch" href="/JavaDriver/assets/js/149.786ca846.js"><link rel="prefetch" href="/JavaDriver/assets/js/15.92d29b5e.js"><link rel="prefetch" href="/JavaDriver/assets/js/150.6b361d6c.js"><link rel="prefetch" href="/JavaDriver/assets/js/151.0c087956.js"><link rel="prefetch" href="/JavaDriver/assets/js/152.12e13429.js"><link rel="prefetch" href="/JavaDriver/assets/js/153.b75da292.js"><link rel="prefetch" href="/JavaDriver/assets/js/154.b47ad622.js"><link rel="prefetch" href="/JavaDriver/assets/js/155.8515b2fc.js"><link rel="prefetch" href="/JavaDriver/assets/js/156.7e86e112.js"><link rel="prefetch" href="/JavaDriver/assets/js/157.eb25995c.js"><link rel="prefetch" href="/JavaDriver/assets/js/158.460bdca5.js"><link rel="prefetch" href="/JavaDriver/assets/js/159.c844a271.js"><link rel="prefetch" href="/JavaDriver/assets/js/16.98bffc3b.js"><link rel="prefetch" href="/JavaDriver/assets/js/160.d3ef9371.js"><link rel="prefetch" href="/JavaDriver/assets/js/161.652a1055.js"><link rel="prefetch" href="/JavaDriver/assets/js/162.418b94d8.js"><link rel="prefetch" href="/JavaDriver/assets/js/163.bb566a17.js"><link rel="prefetch" href="/JavaDriver/assets/js/164.6b2ebfa9.js"><link rel="prefetch" href="/JavaDriver/assets/js/166.144c9c87.js"><link rel="prefetch" href="/JavaDriver/assets/js/167.058b2c31.js"><link rel="prefetch" href="/JavaDriver/assets/js/168.beb41dd9.js"><link rel="prefetch" href="/JavaDriver/assets/js/169.52df9915.js"><link rel="prefetch" href="/JavaDriver/assets/js/17.a8538471.js"><link rel="prefetch" href="/JavaDriver/assets/js/170.c34bbc93.js"><link rel="prefetch" href="/JavaDriver/assets/js/171.b2363da5.js"><link rel="prefetch" href="/JavaDriver/assets/js/172.2b2f8c5a.js"><link rel="prefetch" href="/JavaDriver/assets/js/173.da36aaa4.js"><link rel="prefetch" href="/JavaDriver/assets/js/174.71264f30.js"><link rel="prefetch" href="/JavaDriver/assets/js/175.611e943b.js"><link rel="prefetch" href="/JavaDriver/assets/js/176.7cfb044f.js"><link rel="prefetch" href="/JavaDriver/assets/js/177.15beef70.js"><link rel="prefetch" href="/JavaDriver/assets/js/178.79ff820c.js"><link rel="prefetch" href="/JavaDriver/assets/js/179.c08c74c3.js"><link rel="prefetch" href="/JavaDriver/assets/js/18.080f06c4.js"><link rel="prefetch" href="/JavaDriver/assets/js/180.681ee059.js"><link rel="prefetch" href="/JavaDriver/assets/js/181.7102e101.js"><link rel="prefetch" href="/JavaDriver/assets/js/182.72203307.js"><link rel="prefetch" href="/JavaDriver/assets/js/183.e1fc959d.js"><link rel="prefetch" href="/JavaDriver/assets/js/184.65792811.js"><link rel="prefetch" href="/JavaDriver/assets/js/185.892e87d5.js"><link rel="prefetch" href="/JavaDriver/assets/js/186.b6b36b6b.js"><link rel="prefetch" href="/JavaDriver/assets/js/187.912699b1.js"><link rel="prefetch" href="/JavaDriver/assets/js/188.42fde07d.js"><link rel="prefetch" href="/JavaDriver/assets/js/189.6c294030.js"><link rel="prefetch" href="/JavaDriver/assets/js/19.3d0b2033.js"><link rel="prefetch" href="/JavaDriver/assets/js/190.b7427722.js"><link rel="prefetch" href="/JavaDriver/assets/js/191.0905ec2f.js"><link rel="prefetch" href="/JavaDriver/assets/js/192.d25b1912.js"><link rel="prefetch" href="/JavaDriver/assets/js/193.308f070f.js"><link rel="prefetch" href="/JavaDriver/assets/js/194.0aec45c8.js"><link rel="prefetch" href="/JavaDriver/assets/js/195.7b67c639.js"><link rel="prefetch" href="/JavaDriver/assets/js/196.38b72bcd.js"><link rel="prefetch" href="/JavaDriver/assets/js/197.42b37542.js"><link rel="prefetch" href="/JavaDriver/assets/js/198.5a0a06dd.js"><link rel="prefetch" href="/JavaDriver/assets/js/199.8d196f68.js"><link rel="prefetch" href="/JavaDriver/assets/js/20.561a0ed2.js"><link rel="prefetch" href="/JavaDriver/assets/js/200.019c8e76.js"><link rel="prefetch" href="/JavaDriver/assets/js/201.fd9e7b3e.js"><link rel="prefetch" href="/JavaDriver/assets/js/202.93342e23.js"><link rel="prefetch" href="/JavaDriver/assets/js/203.6a28f1ac.js"><link rel="prefetch" href="/JavaDriver/assets/js/204.6eaf6ea1.js"><link rel="prefetch" href="/JavaDriver/assets/js/205.abb6e9b0.js"><link rel="prefetch" href="/JavaDriver/assets/js/206.cd876280.js"><link rel="prefetch" href="/JavaDriver/assets/js/207.1c3edc66.js"><link rel="prefetch" href="/JavaDriver/assets/js/208.9d9a37b6.js"><link rel="prefetch" href="/JavaDriver/assets/js/209.45060ee6.js"><link rel="prefetch" href="/JavaDriver/assets/js/21.420dd843.js"><link rel="prefetch" href="/JavaDriver/assets/js/210.8ba5ce75.js"><link rel="prefetch" href="/JavaDriver/assets/js/211.aec9815a.js"><link rel="prefetch" href="/JavaDriver/assets/js/212.375fc6cb.js"><link rel="prefetch" href="/JavaDriver/assets/js/213.991a0661.js"><link rel="prefetch" href="/JavaDriver/assets/js/22.98b908ab.js"><link rel="prefetch" href="/JavaDriver/assets/js/23.84d6cab1.js"><link rel="prefetch" href="/JavaDriver/assets/js/24.dbf6b50f.js"><link rel="prefetch" href="/JavaDriver/assets/js/25.4d483080.js"><link rel="prefetch" href="/JavaDriver/assets/js/26.c686e987.js"><link rel="prefetch" href="/JavaDriver/assets/js/27.9de53bd3.js"><link rel="prefetch" href="/JavaDriver/assets/js/28.9ba021c1.js"><link rel="prefetch" href="/JavaDriver/assets/js/29.f569f48b.js"><link rel="prefetch" href="/JavaDriver/assets/js/3.ac8e7f2b.js"><link rel="prefetch" href="/JavaDriver/assets/js/30.572c0ea8.js"><link rel="prefetch" href="/JavaDriver/assets/js/31.56979919.js"><link rel="prefetch" href="/JavaDriver/assets/js/32.abc7cf1b.js"><link rel="prefetch" href="/JavaDriver/assets/js/33.c8320ed6.js"><link rel="prefetch" href="/JavaDriver/assets/js/34.52928a22.js"><link rel="prefetch" href="/JavaDriver/assets/js/35.e6a425be.js"><link rel="prefetch" href="/JavaDriver/assets/js/36.7e6e2485.js"><link rel="prefetch" href="/JavaDriver/assets/js/37.edf87a13.js"><link rel="prefetch" href="/JavaDriver/assets/js/38.c47c2369.js"><link rel="prefetch" href="/JavaDriver/assets/js/39.9aaceb5c.js"><link rel="prefetch" href="/JavaDriver/assets/js/4.1be738b1.js"><link rel="prefetch" href="/JavaDriver/assets/js/40.276a8da4.js"><link rel="prefetch" href="/JavaDriver/assets/js/41.a14cbeea.js"><link rel="prefetch" href="/JavaDriver/assets/js/42.865930a2.js"><link rel="prefetch" href="/JavaDriver/assets/js/43.285c2f43.js"><link rel="prefetch" href="/JavaDriver/assets/js/44.cc6f4789.js"><link rel="prefetch" href="/JavaDriver/assets/js/45.6e0506e9.js"><link rel="prefetch" href="/JavaDriver/assets/js/46.da5a18f8.js"><link rel="prefetch" href="/JavaDriver/assets/js/47.72808083.js"><link rel="prefetch" href="/JavaDriver/assets/js/48.3344f1f8.js"><link rel="prefetch" href="/JavaDriver/assets/js/49.23c17619.js"><link rel="prefetch" href="/JavaDriver/assets/js/5.a1f24142.js"><link rel="prefetch" href="/JavaDriver/assets/js/50.4230b8a8.js"><link rel="prefetch" href="/JavaDriver/assets/js/51.a6eb687f.js"><link rel="prefetch" href="/JavaDriver/assets/js/52.c4502dea.js"><link rel="prefetch" href="/JavaDriver/assets/js/53.eba15757.js"><link rel="prefetch" href="/JavaDriver/assets/js/54.4b3ecb2b.js"><link rel="prefetch" href="/JavaDriver/assets/js/55.2dfeef15.js"><link rel="prefetch" href="/JavaDriver/assets/js/56.6cf927ae.js"><link rel="prefetch" href="/JavaDriver/assets/js/57.00621ad1.js"><link rel="prefetch" href="/JavaDriver/assets/js/58.4eb2acfb.js"><link rel="prefetch" href="/JavaDriver/assets/js/59.d84c66ff.js"><link rel="prefetch" href="/JavaDriver/assets/js/6.9b4da7fa.js"><link rel="prefetch" href="/JavaDriver/assets/js/60.7de90538.js"><link rel="prefetch" href="/JavaDriver/assets/js/61.8ae7f9c6.js"><link rel="prefetch" href="/JavaDriver/assets/js/62.b9ecfb10.js"><link rel="prefetch" href="/JavaDriver/assets/js/63.46f48322.js"><link rel="prefetch" href="/JavaDriver/assets/js/64.b26606de.js"><link rel="prefetch" href="/JavaDriver/assets/js/65.4d7824c8.js"><link rel="prefetch" href="/JavaDriver/assets/js/66.986ba9c4.js"><link rel="prefetch" href="/JavaDriver/assets/js/67.958eb003.js"><link rel="prefetch" href="/JavaDriver/assets/js/68.a2b5629a.js"><link rel="prefetch" href="/JavaDriver/assets/js/69.1aec44ee.js"><link rel="prefetch" href="/JavaDriver/assets/js/7.d087188e.js"><link rel="prefetch" href="/JavaDriver/assets/js/70.7cd7b4e4.js"><link rel="prefetch" href="/JavaDriver/assets/js/71.c7b8deb0.js"><link rel="prefetch" href="/JavaDriver/assets/js/72.c9db6cf2.js"><link rel="prefetch" href="/JavaDriver/assets/js/73.5746737d.js"><link rel="prefetch" href="/JavaDriver/assets/js/74.bf9a945b.js"><link rel="prefetch" href="/JavaDriver/assets/js/75.04eaebc8.js"><link rel="prefetch" href="/JavaDriver/assets/js/76.8ac15c25.js"><link rel="prefetch" href="/JavaDriver/assets/js/77.a4e297af.js"><link rel="prefetch" href="/JavaDriver/assets/js/78.2d565948.js"><link rel="prefetch" href="/JavaDriver/assets/js/79.cc4189f4.js"><link rel="prefetch" href="/JavaDriver/assets/js/8.c9b8a060.js"><link rel="prefetch" href="/JavaDriver/assets/js/80.b711ac4f.js"><link rel="prefetch" href="/JavaDriver/assets/js/81.102f6e53.js"><link rel="prefetch" href="/JavaDriver/assets/js/82.87bcba98.js"><link rel="prefetch" href="/JavaDriver/assets/js/83.e64e025e.js"><link rel="prefetch" href="/JavaDriver/assets/js/84.a2a3695e.js"><link rel="prefetch" href="/JavaDriver/assets/js/85.a152164e.js"><link rel="prefetch" href="/JavaDriver/assets/js/86.dd920be9.js"><link rel="prefetch" href="/JavaDriver/assets/js/87.7b9fd336.js"><link rel="prefetch" href="/JavaDriver/assets/js/88.b1f3de32.js"><link rel="prefetch" href="/JavaDriver/assets/js/89.584649c5.js"><link rel="prefetch" href="/JavaDriver/assets/js/9.0d1b917b.js"><link rel="prefetch" href="/JavaDriver/assets/js/90.cecafbf6.js"><link rel="prefetch" href="/JavaDriver/assets/js/91.7b4c1cdc.js"><link rel="prefetch" href="/JavaDriver/assets/js/92.9b07fe88.js"><link rel="prefetch" href="/JavaDriver/assets/js/93.221fff07.js"><link rel="prefetch" href="/JavaDriver/assets/js/94.b7ad5ce6.js"><link rel="prefetch" href="/JavaDriver/assets/js/95.9608f6c5.js"><link rel="prefetch" href="/JavaDriver/assets/js/96.659db525.js"><link rel="prefetch" href="/JavaDriver/assets/js/97.2b2d3726.js"><link rel="prefetch" href="/JavaDriver/assets/js/98.5085b009.js"><link rel="prefetch" href="/JavaDriver/assets/js/99.9b605260.js">
+    <link rel="stylesheet" href="/JavaDriver/assets/css/0.styles.0a81f5bc.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/JavaDriver/" class="home-link router-link-active"><img src="/JavaDriver/img/JAVADRIVER.png" alt="JavaDriver" class="logo"> <span class="site-name can-hide">JavaDriver</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/JavaDriver/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java相关" class="dropdown-title"><a href="/JavaDriver/java/" class="link-title">Java相关</a> <span class="title" style="display:none;">Java相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/a030ff/" class="nav-link">基础</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/0da4b0/" class="nav-link">并发</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/948850/" class="nav-link">JVM</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/b37ad7/" class="nav-link">设计模式</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="计算机基础" class="dropdown-title"><a href="/JavaDriver/basic/" class="link-title">计算机基础</a> <span class="title" style="display:none;">计算机基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/e00207/" class="nav-link">计算机网络</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/e5f2d7/" class="nav-link">操作系统</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/a25c3a/" class="nav-link">数据结构</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/92288a/" class="nav-link">算法</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/JavaDriver/database/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/3a8659/" class="nav-link">MYSQL</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/d70c1f/" class="nav-link">REDIS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><a href="/JavaDriver/middleware/" class="link-title">中间件</a> <span class="title" style="display:none;">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/40f3c9/" class="nav-link">Netty</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/561f34/" class="nav-link">Kafka</a></li></ul></div></div><div class="nav-item"><a href="/JavaDriver/pages/01b9b2/" class="nav-link">系统设计</a></div><div class="nav-item"><a href="/JavaDriver/pages/5e507a/" class="nav-link">非技术</a></div><div class="nav-item"><a href="/JavaDriver/about/" class="nav-link">关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/JavaDriver/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/AdmireAn/JavaDriver" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h2f580pnmdj213w0u0422.jpg"> <div class="blogger-info"><h3>YoungAnn</h3> <span>西二旗Java老司机一枚 致力于社会主义添砖Java</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/JavaDriver/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java相关" class="dropdown-title"><a href="/JavaDriver/java/" class="link-title">Java相关</a> <span class="title" style="display:none;">Java相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/a030ff/" class="nav-link">基础</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/0da4b0/" class="nav-link">并发</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/948850/" class="nav-link">JVM</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/b37ad7/" class="nav-link">设计模式</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="计算机基础" class="dropdown-title"><a href="/JavaDriver/basic/" class="link-title">计算机基础</a> <span class="title" style="display:none;">计算机基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/e00207/" class="nav-link">计算机网络</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/e5f2d7/" class="nav-link">操作系统</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/a25c3a/" class="nav-link">数据结构</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/92288a/" class="nav-link">算法</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><a href="/JavaDriver/database/" class="link-title">数据库</a> <span class="title" style="display:none;">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/3a8659/" class="nav-link">MYSQL</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/d70c1f/" class="nav-link">REDIS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><a href="/JavaDriver/middleware/" class="link-title">中间件</a> <span class="title" style="display:none;">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/40f3c9/" class="nav-link">Netty</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/pages/561f34/" class="nav-link">Kafka</a></li></ul></div></div><div class="nav-item"><a href="/JavaDriver/pages/01b9b2/" class="nav-link">系统设计</a></div><div class="nav-item"><a href="/JavaDriver/pages/5e507a/" class="nav-link">非技术</a></div><div class="nav-item"><a href="/JavaDriver/about/" class="nav-link">关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/JavaDriver/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaDriver/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/JavaDriver/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/AdmireAn/JavaDriver" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>MYSQL相关</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>REDIS相关</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/JavaDriver/pages/d70c1f/" class="sidebar-link">Redis 有几种数据结构？Zset 是如何实现的？</a></li><li><a href="/JavaDriver/pages/d66211/" class="sidebar-link">为什么 Redis 在单线程下能如此快？</a></li><li><a href="/JavaDriver/pages/34aec2/" class="sidebar-link">简述 Redis 字符串的底层结构</a></li><li><a href="/JavaDriver/pages/9326cc/" class="sidebar-link">Redis的缓存淘汰策略有哪些？</a></li><li><a href="/JavaDriver/pages/7e708d/" class="sidebar-link">简述 Redis 持久化中 RDB 以及 AOF 方案的优缺点</a></li><li><a href="/JavaDriver/pages/656f46/" class="sidebar-link">Redis 如何实现分布式锁？</a></li><li><a href="/JavaDriver/pages/338e30/" aria-current="page" class="active sidebar-link">简述 Redis 集群配置以及基础原理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/JavaDriver/pages/338e30/#复制" class="sidebar-link">复制</a></li></ul></li><li><a href="/JavaDriver/pages/a42826/" class="sidebar-link">简述 Redis 中跳表的应用以及优缺点</a></li><li><a href="/JavaDriver/pages/e2e910/" class="sidebar-link">Redis 中，sentinel 和 cluster 的区别和适用场景是什么？</a></li><li><a href="/JavaDriver/pages/03cd25/" class="sidebar-link">简述 Redis 中如何防止缓存雪崩和缓存击穿</a></li><li><a href="/JavaDriver/pages/9c28c9/" class="sidebar-link">简述 Redis 的线程模型以及底层架构设计</a></li><li><a href="/JavaDriver/pages/cc8507/" class="sidebar-link">简述 Redis 的哨兵机制</a></li><li><a href="/JavaDriver/pages/795c09/" class="sidebar-link">简述 Redis 如何处理热点 key 访问</a></li><li><a href="/JavaDriver/pages/0d3c6b/" class="sidebar-link">Redis 序列化有哪些方式？</a></li></ul></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-1baff76c><div class="articleInfo" data-v-1baff76c><ul class="breadcrumbs" data-v-1baff76c><li data-v-1baff76c><a href="/JavaDriver/" title="首页" class="iconfont icon-home router-link-active" data-v-1baff76c></a></li> <li data-v-1baff76c><a href="/JavaDriver/database/#数据库" data-v-1baff76c>数据库</a></li><li data-v-1baff76c><a href="/JavaDriver/database/#REDIS相关" data-v-1baff76c>REDIS相关</a></li></ul> <div class="info" data-v-1baff76c><div title="作者" class="author iconfont icon-touxiang" data-v-1baff76c><a href="https://github.com/AdmireAn/JavaDriver" target="_blank" title="作者" class="beLink" data-v-1baff76c>YoungAnn</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-1baff76c><a href="javascript:;" data-v-1baff76c>2022-05-21</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">简述 Redis 集群配置以及基础原理<!----></h1>  <div class="theme-vdoing-content content__default"><h1 id="集群"><a href="#集群" class="header-anchor">#</a> 集群</h1> <blockquote><p>集群是redis的分布式数据库方案。通过分片实现数据共享。提供复制和故障转移功能。</p></blockquote> <div class="language-c++ line-numbers-mode"><pre class="language-text"><code>// 保存连接节点所需的有关信息
+typedef struct clusterLink {
+
+    // 连接的创建时间
+    mstime_t ctime;             /* Link creation time */
+
+    // TCP 套接字描述符
+    int fd;                     /* TCP socket file descriptor */
+
+    // 输出缓冲区，保存着等待发送给其他节点的消息（message）。
+    sds sndbuf;                 /* Packet send buffer */
+
+    // 输入缓冲区，保存着从其他节点接收到的消息。
+    sds rcvbuf;                 /* Packet reception buffer */
+
+    // 与这个连接相关联的节点，如果没有的话就为 NULL
+    struct clusterNode *node;   /* Node related to this link if any, or NULL */
+
+} clusterLink;
+
+// 节点状态
+struct clusterNode {
+
+    // 创建节点的时间
+    mstime_t ctime; /* Node object creation time. */
+
+    // 节点的名字，由 40 个十六进制字符组成
+    // 例如 68eef66df23420a5862208ef5b1a7005b806f2ff
+    char name[REDIS_CLUSTER_NAMELEN]; /* Node name, hex string, sha1-size */
+
+    // 节点标识
+    // 使用各种不同的标识值记录节点的角色（比如主节点或者从节点），
+    // 以及节点目前所处的状态（比如在线或者下线）。
+    int flags;      /* REDIS_NODE_... */
+
+    // 节点当前的配置纪元，用于实现故障转移
+    uint64_t configEpoch; /* Last configEpoch observed for this node */
+
+    // 由这个节点负责处理的槽
+    // 一共有 REDIS_CLUSTER_SLOTS / 8 个字节长
+    // 每个字节的每个位记录了一个槽的保存状态
+    // 位的值为 1 表示槽正由本节点处理，值为 0 则表示槽并非本节点处理
+    // 比如 slots[0] 的第一个位保存了槽 0 的保存情况
+    // slots[0] 的第二个位保存了槽 1 的保存情况，以此类推
+    unsigned char slots[REDIS_CLUSTER_SLOTS/8]; /* slots handled by this node */
+
+    // 该节点负责处理的槽数量
+    int numslots;   /* Number of slots handled by this node */
+
+    // 如果本节点是主节点，那么用这个属性记录从节点的数量
+    int numslaves;  /* Number of slave nodes, if this is a master */
+
+    // 指针数组，指向各个从节点
+    struct clusterNode **slaves; /* pointers to slave nodes */
+
+    // 如果这是一个从节点，那么指向主节点
+    struct clusterNode *slaveof; /* pointer to the master node */
+
+    // 最后一次发送 PING 命令的时间
+    mstime_t ping_sent;      /* Unix time we sent latest ping */
+
+    // 最后一次接收 PONG 回复的时间戳
+    mstime_t pong_received;  /* Unix time we received the pong */
+
+    // 最后一次被设置为 FAIL 状态的时间
+    mstime_t fail_time;      /* Unix time when FAIL flag was set */
+
+    // 最后一次给某个从节点投票的时间
+    mstime_t voted_time;     /* Last time we voted for a slave of this master */
+
+    // 最后一次从这个节点接收到复制偏移量的时间
+    mstime_t repl_offset_time;  /* Unix time we received offset for this node */
+
+    // 这个节点的复制偏移量
+    long long repl_offset;      /* Last known repl offset for this node. */
+
+    // 节点的 IP 地址
+    char ip[REDIS_IP_STR_LEN];  /* Latest known IP address of this node */
+
+    // 节点的端口号
+    int port;                   /* Latest known port of this node */
+
+    // 保存连接节点所需的有关信息
+    clusterLink *link;          /* TCP/IP link with this node */
+
+    // 一个链表，记录了所有其他节点对该节点的下线报告
+    list *fail_reports;         /* List of nodes signaling this as failing */
+
+};
+typedef struct clusterNode clusterNode;
+
+
+// 集群状态，每个节点都保存着一个这样的状态，记录了它们眼中的集群的样子。
+// 另外，虽然这个结构主要用于记录集群的属性，但是为了节约资源，
+// 有些与节点有关的属性，比如 slots_to_keys 、 failover_auth_count 
+// 也被放到了这个结构里面。
+typedef struct clusterState {
+
+    // 指向当前节点的指针
+    clusterNode *myself;  /* This node */
+
+    // 集群当前的配置纪元，用于实现故障转移
+    uint64_t currentEpoch;
+
+    // 集群当前的状态：是在线还是下线
+    int state;            /* REDIS_CLUSTER_OK, REDIS_CLUSTER_FAIL, ... */
+
+    // 集群中至少处理着一个槽的节点的数量。
+    int size;             /* Num of master nodes with at least one slot */
+
+    // 集群节点名单（包括 myself 节点）
+    // 字典的键为节点的名字，字典的值为 clusterNode 结构
+    dict *nodes;          /* Hash table of name -&gt; clusterNode structures */
+
+    // 节点黑名单，用于 CLUSTER FORGET 命令
+    // 防止被 FORGET 的命令重新被添加到集群里面
+    // （不过现在似乎没有在使用的样子，已废弃？还是尚未实现？）
+    dict *nodes_black_list; /* Nodes we don't re-add for a few seconds. */
+
+    // 记录要从当前节点迁移到目标节点的槽，以及迁移的目标节点
+    // migrating_slots_to[i] = NULL 表示槽 i 未被迁移
+    // migrating_slots_to[i] = clusterNode_A 表示槽 i 要从本节点迁移至节点 A
+    clusterNode *migrating_slots_to[REDIS_CLUSTER_SLOTS];
+
+    // 记录要从源节点迁移到本节点的槽，以及进行迁移的源节点
+    // importing_slots_from[i] = NULL 表示槽 i 未进行导入
+    // importing_slots_from[i] = clusterNode_A 表示正从节点 A 中导入槽 i
+    clusterNode *importing_slots_from[REDIS_CLUSTER_SLOTS];
+
+    // 负责处理各个槽的节点
+    // 例如 slots[i] = clusterNode_A 表示槽 i 由节点 A 处理
+    clusterNode *slots[REDIS_CLUSTER_SLOTS];
+
+    // 跳跃表，表中以槽作为分值，键作为成员，对槽进行有序排序
+    // 当需要对某些槽进行区间（range）操作时，这个跳跃表可以提供方便
+    // 具体操作定义在 db.c 里面
+    zskiplist *slots_to_keys;
+
+    /* The following fields are used to take the slave state on elections. */
+    // 以下这些域被用于进行故障转移选举
+
+    // 上次执行选举或者下次执行选举的时间
+    mstime_t failover_auth_time; /* Time of previous or next election. */
+
+    // 节点获得的投票数量
+    int failover_auth_count;    /* Number of votes received so far. */
+
+    // 如果值为 1 ，表示本节点已经向其他节点发送了投票请求
+    int failover_auth_sent;     /* True if we already asked for votes. */
+
+    int failover_auth_rank;     /* This slave rank for current auth request. */
+
+    uint64_t failover_auth_epoch; /* Epoch of the current election. */
+
+    /* Manual failover state in common. */
+    /* 共用的手动故障转移状态 */
+
+    // 手动故障转移执行的时间限制
+    mstime_t mf_end;            /* Manual failover time limit (ms unixtime).
+                                   It is zero if there is no MF in progress. */
+    /* Manual failover state of master. */
+    /* 主服务器的手动故障转移状态 */
+    clusterNode *mf_slave;      /* Slave performing the manual failover. */
+    /* Manual failover state of slave. */
+    /* 从服务器的手动故障转移状态 */
+    long long mf_master_offset; /* Master offset the slave needs to start MF
+                                   or zero if stil not received. */
+    // 指示手动故障转移是否可以开始的标志值
+    // 值为非 0 时表示各个主服务器可以开始投票
+    int mf_can_start;           /* If non-zero signal that the manual failover
+                                   can start requesting masters vote. */
+
+    /* The followign fields are uesd by masters to take state on elections. */
+    /* 以下这些域由主服务器使用，用于记录选举时的状态 */
+
+    // 集群最后一次进行投票的纪元
+    uint64_t lastVoteEpoch;     /* Epoch of the last vote granted. */
+
+    // 在进入下个事件循环之前要做的事情，以各个 flag 来记录
+    int todo_before_sleep; /* Things to do in clusterBeforeSleep(). */
+
+    // 通过 cluster 连接发送的消息数量
+    long long stats_bus_messages_sent;  /* Num of msg sent via cluster bus. */
+
+    // 通过 cluster 接收到的消息数量
+    long long stats_bus_messages_received; /* Num of msg rcvd via cluster bus.*/
+
+} clusterState;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br></div></div><p>[外链图片转存中...(img-pyfo5Uy7-1653145947299)]</p> <ol start="2"><li>cluster meet命令</li></ol> <blockquote><p>客户端向节点A发送meet命令，指定节点B的ip和端口。将B加入到A的集群。</p></blockquote> <ul><li>向A发命令cluster meet B.</li> <li>A为B创建一个clusterNode结构并保存在dict中</li> <li>A向B发一个meet消息</li> <li>B为A创建一个clusterNode结构并保存在dict中</li> <li>B返回A一个PONG消息</li> <li>A收到PONG返回一个PING</li> <li>B收到PING，握手结束
+[外链图片转存中...(img-MJB1V7if-1653145947300)]</li></ul> <ol start="3"><li>槽指派</li></ol> <blockquote><p>redis通过分片的方式保存键值对，集群的整个数据库被分成16384个槽。每个节点处理一定数量的槽，每个key一定属于其中一个槽。</p></blockquote> <ul><li>向节点指派槽的命令：cluster addslots 1 2 3 4</li> <li>clusterNode中Slots数组保存当前节点所有槽信息。Slots是二进制数组。</li> <li>传播节点的槽指派信息：集群节点会相互发送自己被指派的槽，节点收到其他几点的槽信息会更新相应的dict中的clusterNode结构。</li> <li>clusterState中Slots数组保存所有槽信息。
+[外链图片转存中...(img-p5szUZKB-1653145947300)]</li> <li>cluster addslots 1 2 3 4的实现：首先遍历clusterState的Slots判断命令中的槽还没有被指派。然后遍历命令中的槽，设置clusterState的Slots和clusterNode的slots。</li></ul> <ol start="4"><li>集群中执行命令</li></ol> <ul><li>接收命令的节点计算命令要处理的数据库属于哪个槽，如果是指派给自己的就直接执行；如果不是就向客户端返回一个moved错误指引客户端至正确节点执行。</li> <li>计算给定key的槽：任何一个key通过这个算法就可以得出一个介于0-16383之间的槽。crc16(key)&amp;16383</li> <li>集群中的节点只能使用0号数据库。</li></ul> <ol start="5"><li>重新分片
+集群管理软件redis-trib负责执行。</li></ol> <ul><li>redis-trib向目标节点发送导入命令，并将slot指向目标节点</li> <li>redis-trib向源节点发送导出命令</li> <li>redis-trib从源节点获取导出slot的键，导入到目标节点</li> <li>键迁移结束。向集群中任意节点发送消息，slot已指向目标节点。
+[外链图片转存中...(img-dezJf9DD-1653145947300)]</li></ul> <ol start="6"><li>ask错误</li></ol> <ul><li>ask错误：正在被转移的key被查询时，会发生查询转移</li> <li>Cluster setslot importing命令：clusterState的Importing_lots_from记录着导入的槽</li> <li>Cluster setslot migrating命令:clusterState的migrating_slots_to记录着正在导出的槽。ask错误的实现</li></ul> <ol start="7"><li>publish的实现</li></ol> <blockquote><p>不是直接向所有节点广播，而是通过一个节点向所有节点广播。因为redis中有一个潜规则：各节点通过消息通信。</p></blockquote> <div class="language-c++ line-numbers-mode"><pre class="language-text"><code>typedef struct {
+
+    // 频道名长度
+    uint32_t channel_len;
+
+    // 消息长度
+    uint32_t message_len;
+
+    // 消息内容，格式为 频道名+消息
+    // bulk_data[0:channel_len-1] 为频道名
+    // bulk_data[channel_len:channel_len+message_len-1] 为消息
+    unsigned char bulk_data[8]; /* defined as 8 just for alignment concerns. */
+
+} clusterMsgDataPublish;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h2 id="复制"><a href="#复制" class="header-anchor">#</a> 复制</h2> <ol><li>复制的步骤</li></ol> <ul><li>redis的复制分为两个步骤，同步（sync）和命令传播(commond propogate)。</li> <li>同步：从服务器向主服务器发送sync命令，主服务器生成rdb文件，并将生成rdb期间的数据库修改命令保存在缓冲区，然后都传给从服务器。同步浪费资源体现在：a.生成rdb耗费cpu，内存，i/o;b.传输rdb耗费网络资源；c.载入rdb会阻塞服务器。</li> <li>命令传播：主服务器收到的修改命令也发给从服务器执行。</li> <li>redis2.8以前的复制缺陷：缺陷场景：主从断线之后的重新复制。实现方式：断线之后，主从重新走一遍同步和命令传播。缺陷原因：同步是很浪费资源的操作，应该尽量避免。</li> <li>redis2.8以后用psync代替sync;psync支持完全重同步和部分重同步。</li> <li>部分重同步的实现：偏移量（同步的字节量），复制积压缓冲区(固定长度的队列)，服务器运行id（判断是不是向同一个服务器发送的同步命令）。
+[外链图片转存中...(img-PHS6g12W-1653145947297)]</li></ul> <ol start="2"><li>复制的实现</li></ol> <ul><li>设置主服务器地址和端口。Slaveof 127.0.0.1 6379。从服务器保存主服务器地址和端口。</li> <li>建立套接字。从服务器根据保存的主服务器地址和端口号，建立套接字。</li> <li>从服务器发送ping命令。超时或者错误则重新建立套接字重试；返回“PONG”说明网络连接正常。</li> <li>身份验证。主从都没有设置身份验证或者设置一致才可以通过身份验证。</li> <li>从服务器发送监听端口，主服务器将其保存在redisClient的slave_listening_port;</li> <li>同步。从服务器向主服务发送psync命令。
+[外链图片转存中...(img-JbQvVK4o-1653145947297)]</li></ul> <ol start="3"><li>心跳检测</li></ol> <blockquote><p>从服务器每秒发送命令给主服务器，replconf ack offset,有三个作用</p></blockquote> <ul><li>检测链接状况</li> <li>辅助实现min-slaves选项。min-slaves-to-write 3，min-slaves-max-lag 10。表示从服务器少于3个，或者从服务延迟都大于等于10，主服务器将终止写命令。</li> <li>检测命令丢失</li></ul></div></div>  <div class="page-edit"><div class="edit-link"><a href="https://github.com/AdmireAn/JavaDriver/edit/master/docs/03.数据库/02.REDIS相关/040.简述 Redis 集群配置以及基础原理.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2022/05/22, 00:01:01</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/JavaDriver/pages/656f46/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">Redis 如何实现分布式锁？</div></a> <a href="/JavaDriver/pages/a42826/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">简述 Redis 中跳表的应用以及优缺点</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/JavaDriver/pages/656f46/" class="prev">Redis 如何实现分布式锁？</a></span> <span class="next"><a href="/JavaDriver/pages/a42826/">简述 Redis 中跳表的应用以及优缺点</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/JavaDriver/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/JavaDriver/pages/bb7e83/"><div>
+            电商-商品系统设计
+            <!----></div></a> <span class="date">12-17</span></dt></dl><dl><dd>02</dd> <dt><a href="/JavaDriver/pages/6ac68e/"><div>
+            关于如何写OKR
+            <!----></div></a> <span class="date">12-09</span></dt></dl><dl><dd>03</dd> <dt><a href="/JavaDriver/pages/74395b/"><div>
+            对事不对人 vs 对人不对事
+            <!----></div></a> <span class="date">12-09</span></dt></dl> <dl><dd></dd> <dt><a href="/JavaDriver/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:854818303@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/AdmireAn" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://music.163.com/#/playlist?id=755597173" title="听音乐" target="_blank" class="iconfont icon-erji"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2022-2023
+    <span>YoungAnnn | <a href="https://github.com/AdmireAn/JavaDriver" target="_blank">MIT License</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/JavaDriver/assets/js/app.90939cb0.js" defer></script><script src="/JavaDriver/assets/js/2.8d23e9e5.js" defer></script><script src="/JavaDriver/assets/js/165.95392c30.js" defer></script>
+  </body>
+</html>
